@@ -31,6 +31,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: false
-          tags: ghcr.io/thomasjpfan/union_sdk:latest
+          tags: ghcr.io/thomasjpfan/union_sdk:${{ env.UNION_VERSION }}
           build-args: |
             UNION_VERSION=$UNION_VERSION
