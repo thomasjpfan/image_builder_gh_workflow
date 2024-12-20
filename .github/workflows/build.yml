@@ -19,10 +19,18 @@ jobs:
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - name: Set environment variables
+        id: env
+        run: |
+          UNION_VERSION=${RELEASE_VERSION//v/}  # Remove v
+          echo "UNION_VERSION=$UNION_VERSION" >> $GITHUB_ENV
+        env:
+          RELEASE_VERSION: ${{ inputs.release_version }}
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: false
           tags: ghcr.io/thomasjpfan/union_sdk:latest
           build-args: |
-            UNION_VERSION=${{ inputs.release_version }}
+            UNION_VERSION=$UNION_VERSION
