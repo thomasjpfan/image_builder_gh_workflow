@@ -33,4 +33,4 @@ jobs:
           push: false
           tags: ghcr.io/thomasjpfan/union_sdk:${{ env.UNION_VERSION }}
           build-args: |
-            UNION_VERSION=$UNION_VERSION
+            UNION_VERSION=${{ env.UNION_VERSION }}
