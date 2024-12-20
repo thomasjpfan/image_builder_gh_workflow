@@ -24,3 +24,5 @@ jobs:
         with:
           push: false
           tags: ghcr.io/thomasjpfan/union_sdk:latest
+          build-args: |
+            UNION_VERSION=${{ inputs.release_version }}
