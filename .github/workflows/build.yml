@@ -12,10 +12,17 @@ concurrency:
   group: publish-images-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  IMAGE_NAME: ghcr.io/thomasjpfan/union-sdk
+
 jobs:
   build-image:
     name: Build image
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -30,7 +37,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          push: false
-          tags: ghcr.io/thomasjpfan/union_sdk:${{ env.UNION_VERSION }}
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:py${{ matrix.python-version }}-${{ env.UNION_VERSION }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           build-args: |
             UNION_VERSION=${{ env.UNION_VERSION }}
