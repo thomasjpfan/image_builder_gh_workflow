@@ -19,6 +19,8 @@ jobs:
   build-image:
     name: Build image
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     strategy:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
